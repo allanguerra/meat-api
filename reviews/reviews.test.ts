@@ -2,6 +2,7 @@ import 'jest';
 import * as request from 'supertest';
 
 let address: String = (<any>global).address;
+let auth: string = (<any>global).auth;
 
 test( 'get /reviews', () => {
     return request( address )

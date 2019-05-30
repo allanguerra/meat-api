@@ -11,7 +11,8 @@
   "license": "ISC",
   "jest": {
     "globals": {
-      "address": "http://localhost:3001"
+      "address": "http://localhost:3001",
+      "auth": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbkBlbWFpbC5jb20iLCJpYXQiOjI2MTYyMzkwMjJ9.k8uIYy6ghRHyOBeeWfcKlzZCbwzA9wVTDQ8qc51UDis"
     },
     "testEnvironment": "node",
     "transform": {

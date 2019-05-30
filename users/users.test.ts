@@ -1,11 +1,13 @@
 import 'jest';
 import * as request from 'supertest';
 
-let address: String = (<any>global).address;
+let address: string = (<any>global).address;
+let auth: string = (<any>global).auth;
 
 test( 'get /users', () => {
     return request( address )
         .get('/users')
+        .set( 'Authorization', auth )
         .then( resp => {
             expect( resp.status ).toBe( 200 );
             expect( resp.body.items ).toBeInstanceOf( Array );        
@@ -16,6 +18,7 @@ test( 'get /users', () => {
 test( 'get /users/aaaaa - not found', () => {
     return request( address )
         .get('/users/aaaaa')
+        .set( 'Authorization', auth )
         .then( resp => {
             expect( resp.status ).toBe( 404 );      
         } )
@@ -25,6 +28,7 @@ test( 'get /users/aaaaa - not found', () => {
 test( 'post /users', () => {
     return request( address )
         .post('/users')
+        .set( 'Authorization', auth )
         .send( {
             name: 'test user',
             email: 'test.user@email.com',
@@ -41,6 +45,7 @@ test( 'post /users', () => {
 test( 'patch /users/:id', () => {
     return request( address )
         .post('/users')
+        .set( 'Authorization', auth )
         .send( {
             name: 'test user 2',
             email: 'test.user2@email.com',
@@ -49,6 +54,7 @@ test( 'patch /users/:id', () => {
         .then( resp => {
             return request( address )
                 .patch(`/users/${ resp.body._id }`)
+                .set( 'Authorization', auth )
                 .send( {
                     name: 'test user 2 - patch'
                 } )
