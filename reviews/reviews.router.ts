@@ -1,6 +1,7 @@
 import * as restify from 'restify';
 import * as mongoose from 'mongoose'
 
+import { authorize } from '../security/authz.handler';
 import { ModelRouter } from '../common/models/model-router';
 import { Review } from './reviews.model';
 import { NotFoundError } from 'restify-errors';
@@ -37,13 +38,13 @@ class ReviewRouter extends ModelRouter< Review > {
 
         application.get( `${ this.basePath }/:id`, [this.validateID, this.findById] );
 
-        application.post( `${ this.basePath }`, this.save );
+        application.post( `${ this.basePath }`, [ authorize( 'user' ), this.save ] );
 
-        application.put( `${ this.basePath }/:id`, [this.validateID, this.replace] );
+        application.put( `${ this.basePath }/:id`, [ authorize( 'user' ), this.validateID, this.replace ] );
 
-        application.patch( `${ this.basePath }/:id`, [this.validateID, this.update] );
+        application.patch( `${ this.basePath }/:id`, [ authorize( 'user' ), this.validateID, this.update ] );
 
-        application.del( `${ this.basePath }/:id`, [this.validateID, this.delete] );
+        application.del( `${ this.basePath }/:id`, [ authorize( 'user' ), this.validateID, this.delete ] );
     }
 
 }

@@ -3,6 +3,7 @@ import * as mongoose from 'mongoose';
 
 import { mergePatchBodyParser } from './server-patch.parser';
 
+import { tokenParser } from '../security/token.parser';
 import { handleError } from './error.handler';
 import { environment } from '../common/environment';
 import { Router } from '../common/router';
@@ -31,6 +32,7 @@ export class Server {
                 this.application.use( restify.plugins.queryParser() );
                 this.application.use( restify.plugins.bodyParser() );
                 this.application.use( mergePatchBodyParser );
+                this.application.use( tokenParser );
 
                 // ROUTES
                 for( let router of routers ){
