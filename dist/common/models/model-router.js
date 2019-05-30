@@ -98,11 +98,14 @@ class ModelRouter extends router_1.Router {
             },
             items: documents
         };
-        if (options.page) {
+        if (options.page && options.count && options.pageSize) {
             if (options.page > 1) {
                 resource._links.previous = `${this.basePath}?_page=${options.page - 1}`;
             }
-            resource._links.next = `${this.basePath}?_page=${options.page + 1}`;
+            const remaining = options.count - (options.page * options.pageSize);
+            if (remaining > 0) {
+                resource._links.next = `${this.basePath}?_page=${options.page + 1}`;
+            }
         }
         return resource;
     }
