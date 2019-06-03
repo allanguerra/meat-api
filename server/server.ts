@@ -8,6 +8,7 @@ import { mergePatchBodyParser } from './server-patch.parser';
 import { tokenParser } from '../security/token.parser';
 import { handleError } from './error.handler';
 import { environment } from '../common/environment';
+import { logger } from '../common/logger';
 import { Router } from '../common/router';
 
 export class Server {
@@ -27,7 +28,8 @@ export class Server {
                 //CREATE SERVER
                 const options: restify.ServerOptions = {
                     name: 'meat-api',
-                    version: '1.0.0'
+                    version: '1.0.0',
+                    log: logger
                 };
                 if( environment.security.eneableHTTPS ) {
                     options.certificate = fs.readFileSync( environment.security.certificate );
@@ -35,6 +37,10 @@ export class Server {
                 }
 
                 this.application = restify.createServer( options );
+
+                this.application.pre( restify.plugins.requestLogger( {
+                    log: logger
+                } ) );
 
                 // PLUGINS         
                 this.application.use( restify.plugins.queryParser() );

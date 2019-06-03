@@ -8,6 +8,10 @@ export const environment = {
         certificate: process.env.CERTI_FILE || '../security/keys/cert.pem',
         key: process.env.CERTI_KEY || '../security/keys/key.pem'
     },
+    log: {
+        level: process.env.LOG_LEVEL || 'debug',
+        name: 'meat-api-logger'
+    },
     regex: { 
         email: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
         decimal: /^\d+\.\d{0,2}$/
